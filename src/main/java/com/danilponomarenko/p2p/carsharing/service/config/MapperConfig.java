@@ -1,4 +1,4 @@
-package danil.ponomarenko.p2pcarsharingservice.config;
+package com.danilponomarenko.p2p.carsharing.service.config;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.NullValueCheckStrategy;

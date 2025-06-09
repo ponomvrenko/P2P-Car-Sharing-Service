@@ -1,4 +1,4 @@
-package danil.ponomarenko.p2pcarsharingservice;
+package com.danilponomarenko.p2p.carsharing.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
