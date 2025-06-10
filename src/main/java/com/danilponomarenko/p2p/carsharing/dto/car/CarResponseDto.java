@@ -1,8 +1,8 @@
 package com.danilponomarenko.p2p.carsharing.dto.car;
 
 import com.danilponomarenko.p2p.carsharing.model.Car;
-import lombok.Data;
 import java.math.BigDecimal;
+import lombok.Data;
 
 @Data
 public class CarResponseDto {

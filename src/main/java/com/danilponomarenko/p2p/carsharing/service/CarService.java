@@ -2,8 +2,8 @@ package com.danilponomarenko.p2p.carsharing.service;
 
 import com.danilponomarenko.p2p.carsharing.dto.car.CarRequestDto;
 import com.danilponomarenko.p2p.carsharing.dto.car.CarResponseDto;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface CarService {
     List<CarResponseDto> getAll(Pageable pageable);
