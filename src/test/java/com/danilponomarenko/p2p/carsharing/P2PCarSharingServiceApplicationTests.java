@@ -1,4 +1,4 @@
-package com.danilponomarenko.p2p.carsharing.service;
+package com.danilponomarenko.p2p.carsharing;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

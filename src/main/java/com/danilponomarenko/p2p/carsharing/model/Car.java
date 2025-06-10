@@ -1,4 +1,4 @@
-package com.danilponomarenko.p2p.carsharing.service.model;
+package com.danilponomarenko.p2p.carsharing.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,8 +13,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.util.List;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cars")
@@ -67,10 +70,6 @@ public class Car {
 
     @Column(nullable = false)
     private Integer seats;
-
-    // Registration number of the car (only for manager eyes)
-    @Column(name = "registration_number", nullable = false, unique = true)
-    private String registrationNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
