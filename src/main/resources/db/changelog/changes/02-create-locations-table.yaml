@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 02-create-locations-table
+      author: Danil Ponomarenko
+      changes:
+        - createTable:
+            tableName: locations
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: address
+                  type: VARCHAR(255)
+
+              - column:
+                  name: city
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: postal_code
+                  type: VARCHAR(20)
+
+              - column:
+                  name: latitude
+                  type: DECIMAL(10,8)
+
+              - column:
+                  name: longitude
+                  type: DECIMAL(11,8)
+
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
