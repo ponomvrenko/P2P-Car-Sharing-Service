@@ -1,3 +1,4 @@
+/*
 package com.danilponomarenko.p2p.carsharing.dto.car;
 
 import com.danilponomarenko.p2p.carsharing.model.Car;
@@ -56,3 +57,4 @@ public class CarRequestDto {
     @NotNull(message = "LocationId is required!")
     private Long locationId;
 }
+*/

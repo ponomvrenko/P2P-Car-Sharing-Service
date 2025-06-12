@@ -1,3 +1,4 @@
+/*
 package com.danilponomarenko.p2p.carsharing.service;
 
 import com.danilponomarenko.p2p.carsharing.dto.car.CarRequestDto;
@@ -16,3 +17,4 @@ public interface CarService {
 
     void delete(Long id);
 }
+*/

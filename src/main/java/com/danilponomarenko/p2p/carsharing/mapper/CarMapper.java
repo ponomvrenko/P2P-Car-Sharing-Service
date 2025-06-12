@@ -1,3 +1,4 @@
+/*
 package com.danilponomarenko.p2p.carsharing.mapper;
 
 import com.danilponomarenko.p2p.carsharing.config.MapperConfig;
@@ -12,3 +13,4 @@ public interface CarMapper {
 
     Car toModel(CarRequestDto requestDto);
 }
+*/

@@ -32,7 +32,6 @@ public class VerificationDoc {
     @Column(name = "doc_type", nullable = false)
     private VerificationDocType docType;
 
-
     @Column(name = "doc_url", nullable = false)
     private String docUrl;
 
