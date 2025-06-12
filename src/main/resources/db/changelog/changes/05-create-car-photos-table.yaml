@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 03-create-car-photos-table
+      id: 05-create-car-photos-table
       author: Danil Ponomarenko
       changes:
         - createTable:
@@ -28,7 +28,7 @@ databaseChangeLog:
 
               - column:
                   name: is_primary
-                  type: BOOLEAN
+                  type: BIT(1)
                   constraints:
                     nullable: false
 

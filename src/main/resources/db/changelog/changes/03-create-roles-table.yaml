@@ -1,13 +1,13 @@
 databaseChangeLog:
   - changeSet:
-      id: 05-create-roles-table
+      id: 03-create-roles-table
       author: Danil Ponomarenko
       changes:
         - createTable:
             tableName: roles
             columns:
               - column:
-                  name: role_id
+                  name: id
                   type: BIGINT
                   autoIncrement: true
                   constraints:
@@ -15,7 +15,7 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: name
+                  name: role_name
                   type: VARCHAR(30)
                   constraints:
                     nullable: false
