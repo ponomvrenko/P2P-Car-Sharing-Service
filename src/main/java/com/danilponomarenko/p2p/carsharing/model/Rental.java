@@ -26,7 +26,7 @@ public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rental_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "rental_date", nullable = false)
@@ -43,7 +43,7 @@ public class Rental {
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "renter_id", nullable = false)
     private User renter;
 
     @ManyToOne

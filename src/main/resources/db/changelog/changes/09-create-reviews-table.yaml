@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 08-create-verification-docs-table
+      id: 09-create-reviews-table
       author: Danil Ponomarenko
       changes:
         - createTable:
-            tableName: verification_docs
+            tableName: reviews
             columns:
               - column:
                   name: id
@@ -15,28 +15,37 @@ databaseChangeLog:
                     nullable: false
 
               - column:
-                  name: doc_type
-                  type: VARCHAR(50)
+                  name: rating
+                  type: INT
                   constraints:
                     nullable: false
 
               - column:
-                  name: doc_url
-                  type: VARCHAR(255)
+                  name: comment
+                  type: VARCHAR(1000)
                   constraints:
-                    nullable: false
+                    nullable: true
 
               - column:
-                  name: uploaded_at
-                  type: DATETIME
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: user_id
+                  name: renter_id
                   type: BIGINT
                   constraints:
                     nullable: false
-                    foreignKeyName: fk_verification_docs_user
+                    foreignKeyName: fk_reviews_renter
                     referencedTableName: users
                     referencedColumnNames: id
+
+              - column:
+                  name: car_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_reviews_car
+                    referencedTableName: cars
+                    referencedColumnNames: id
+
+              - column:
+                  name: created_at
+                  type: DATETIME
+                  constraints:
+                    nullable: false

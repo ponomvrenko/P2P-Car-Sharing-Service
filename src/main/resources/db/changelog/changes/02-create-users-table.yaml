@@ -1,13 +1,13 @@
 databaseChangeLog:
   - changeSet:
-      id: 04-create-users-table
+      id: 02-create-users-table
       author: Danil Ponomarenko
       changes:
         - createTable:
             tableName: users
             columns:
               - column:
-                  name: user_id
+                  name: id
                   type: BIGINT
                   autoIncrement: true
                   constraints:
@@ -47,7 +47,7 @@ databaseChangeLog:
 
               - column:
                   name: is_verified
-                  type: BOOLEAN
+                  type: BIT(1)
                   defaultValueBoolean: false
                   constraints:
                     nullable: false

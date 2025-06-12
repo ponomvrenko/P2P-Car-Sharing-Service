@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 02-create-locations-table
+      id: 01-create-locations-table
       author: Danil Ponomarenko
       changes:
         - createTable:
@@ -44,7 +44,7 @@ databaseChangeLog:
 
               - column:
                   name: is_deleted
-                  type: BOOLEAN
+                  type: BIT(1)
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
