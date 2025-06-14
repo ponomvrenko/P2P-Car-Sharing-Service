@@ -10,12 +10,11 @@ import com.danilponomarenko.p2p.carsharing.model.User;
 import com.danilponomarenko.p2p.carsharing.repository.RoleRepository;
 import com.danilponomarenko.p2p.carsharing.repository.UserRepository;
 import com.danilponomarenko.p2p.carsharing.service.UserService;
+import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,6 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
             throw new RegistrationException(CAN_NOT_REGISTER_USER_BY_EMAIL + requestDto.getEmail());
         }
-
 
         String rowRole = requestDto.getRole();
         Role.RoleName roleName;

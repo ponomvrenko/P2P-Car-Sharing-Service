@@ -28,7 +28,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Login to a user account",
             description = "Get a JWT token to a certain account")
     public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {

@@ -1,4 +1,3 @@
-/*
 package com.danilponomarenko.p2p.carsharing.dto.car;
 
 import com.danilponomarenko.p2p.carsharing.model.Car;
@@ -40,4 +39,3 @@ public class CarResponseDto {
     private String locationName; // або об'єкт LocationDto за потреби
 
 }
-*/

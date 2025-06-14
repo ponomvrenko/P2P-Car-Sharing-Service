@@ -1,6 +1,7 @@
-/*
 package com.danilponomarenko.p2p.carsharing.dto.car;
 
+import com.danilponomarenko.p2p.carsharing.dto.location.LocationDto;
+import com.danilponomarenko.p2p.carsharing.dto.verification.VerificationDocDto;
 import com.danilponomarenko.p2p.carsharing.model.Car;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -8,12 +9,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class CarRequestDto {
+public class CarCreateRequestDto {
 
     @NotBlank(message = "Brand is required!")
     @Size(max = 255, message = "Brand must not exceed 255 characters!")
@@ -55,6 +57,9 @@ public class CarRequestDto {
     private Integer seats;
 
     @NotNull(message = "LocationId is required!")
-    private Long locationId;
+    private LocationDto location;
+
+    private List<String> photoUrls;
+
+    private List<VerificationDocDto> verificationDocs;
 }
-*/
