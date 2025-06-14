@@ -19,8 +19,15 @@ public class AuthenticationService {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(requestDto.email(), requestDto.password())
         );
-        String token = jwtUtil.generateToken(authentication.getName());
+
+        String role = authentication.getAuthorities()
+                .stream()
+                .findFirst()
+                .map(auth -> auth.getAuthority().replace("ROLE_", "")) // Якщо роль з префіксом
+                .orElse("CUSTOMER");
+
+        String token = jwtUtil.generateToken(authentication.getName(), role);
+
         return new UserLoginResponseDto(token);
     }
 }
-
