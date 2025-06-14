@@ -2,6 +2,8 @@ package com.danilponomarenko.p2p.carsharing.service.impl;
 
 import com.danilponomarenko.p2p.carsharing.dto.car.CarCreateRequestDto;
 import com.danilponomarenko.p2p.carsharing.dto.car.CarResponseDto;
+import com.danilponomarenko.p2p.carsharing.dto.car.CarUpdateRequestDto;
+import com.danilponomarenko.p2p.carsharing.exception.EntityNotFoundException;
 import com.danilponomarenko.p2p.carsharing.mapper.CarMapper;
 import com.danilponomarenko.p2p.carsharing.mapper.LocationMapper;
 import com.danilponomarenko.p2p.carsharing.model.Car;
@@ -20,8 +22,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @Service
@@ -80,4 +84,117 @@ public class CarServiceImpl implements CarService {
 
         return carMapper.toDto(savedCar);
     }
+
+    @Override
+    public List<CarResponseDto> getAllAvailableCars() {
+        return carRepository.findByStatus(Car.CarStatus.AVAILABLE)
+                .stream()
+                .map(carMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CarResponseDto> getCarsByOwner(String email) {
+        List<Car> cars = carRepository.findByOwnerEmail(email);
+        return cars.stream()
+                .map(carMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CarResponseDto updateCar(Long id, CarUpdateRequestDto requestDto, String ownerEmail) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Car with id " + id + " not found"));
+
+        // Проверка владельца
+        if (!car.getOwner().getEmail().equals(ownerEmail)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "You do not have permission to update this car"
+            );
+        }
+
+        // Обновляем только разрешённые поля
+        if (requestDto.getColor() != null) {
+            car.setColor(requestDto.getColor());
+        }
+
+        if (requestDto.getMileage() != null) {
+            car.setMileage(requestDto.getMileage());
+        }
+
+        if (requestDto.getDescription() != null) {
+            car.setDescription(requestDto.getDescription());
+        }
+
+        if (requestDto.getDailyFee() != null) {
+            car.setDailyFee(requestDto.getDailyFee());
+        }
+
+        if (requestDto.getSeats() != null) {
+            car.setSeats(requestDto.getSeats());
+        }
+
+        if (requestDto.getLocation() != null) {
+            Location location = new Location();
+            location.setName(requestDto.getLocation().getName());
+            location.setAddress(requestDto.getLocation().getAddress());
+            location.setCity(requestDto.getLocation().getCity());
+            location.setPostalCode(requestDto.getLocation().getPostalCode());
+            location.setLatitude(requestDto.getLocation().getLatitude());
+            location.setLongitude(requestDto.getLocation().getLongitude());
+            car.setLocation(location);
+        }
+
+        if (requestDto.getLocation() != null) {
+            Location location = new Location();
+            location.setName(requestDto.getLocation().getName());
+            location.setCity(requestDto.getLocation().getCity());
+            location.setAddress(requestDto.getLocation().getAddress());
+            location.setPostalCode(requestDto.getLocation().getPostalCode());
+            location.setLatitude(requestDto.getLocation().getLatitude());
+            location.setLongitude(requestDto.getLocation().getLongitude());
+            locationRepository.save(location);
+            car.setLocation(location);
+        }
+
+        if (requestDto.getPhotoUrls() != null) {
+            List<CarPhoto> photos = requestDto.getPhotoUrls().stream()
+                    .map(url -> {
+                        CarPhoto photo = new CarPhoto();
+                        photo.setUrl(url);
+                        photo.setCar(car);
+                        photo.setUploadedAt(LocalDateTime.now());
+                        return photo;
+                    })
+                    .collect(Collectors.toList());
+            car.setCarPhotos(photos);
+        }
+
+        // Сохраняем изменения
+        Car updated = carRepository.save(car);
+        return carMapper.toDto(updated);
+    }
+
+    @Override
+    public List<CarResponseDto> getPendingCars() {
+        return carRepository.findByStatus(Car.CarStatus.UNAVAILABLE).stream()
+                .map(carMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CarResponseDto approveCar(Long id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Car with id " + id + " not found"));
+
+        if (car.getStatus() != Car.CarStatus.UNAVAILABLE) {
+            throw new IllegalStateException("Only UNAVAILABLE cars can be approved");
+        }
+
+        car.setStatus(Car.CarStatus.AVAILABLE);
+        Car saved = carRepository.save(car);
+
+        return carMapper.toDto(saved);
+    }
+
 }
