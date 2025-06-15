@@ -63,7 +63,7 @@ public class CarPhotoServiceImpl implements CarPhotoService {
 
     @Override
     public CarPhotoDto getPrimaryPhoto(Long carId) {
-        CarPhoto photo = carPhotoRepository.findByCarIdAndPrimaryTrue(carId)
+        CarPhoto photo = carPhotoRepository.findByCarIdAndIsPrimaryTrue(carId)
                 .orElseThrow(() -> new IllegalArgumentException(
                         "Primary photo not found for car: " + carId
                 ));

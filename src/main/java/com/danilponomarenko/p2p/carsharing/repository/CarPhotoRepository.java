@@ -15,7 +15,7 @@ public interface CarPhotoRepository extends JpaRepository<CarPhoto, Long> {
     @Query("UPDATE CarPhoto p SET p.isPrimary = false WHERE p.car.id = :carId")
     void resetPrimaryForCar(@Param("carId") Long carId);
 
-    Optional<CarPhoto> findByCarIdAndPrimaryTrue(Long carId);
+    Optional<CarPhoto> findByCarIdAndIsPrimaryTrue(Long carId);
 
     List<CarPhoto> findByCarId(Long carId);
 }
