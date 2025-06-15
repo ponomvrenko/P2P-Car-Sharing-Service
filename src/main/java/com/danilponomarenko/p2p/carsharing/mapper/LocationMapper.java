@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(config = MapperConfig.class)
 public interface LocationMapper {
-
     Location toModel(LocationDto locationDto);
+
+    LocationDto toDto(Location location);
 }

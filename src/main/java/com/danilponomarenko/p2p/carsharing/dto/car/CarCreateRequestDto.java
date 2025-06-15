@@ -56,7 +56,7 @@ public class CarCreateRequestDto {
     @Min(value = 1, message = "Must have at least 1 seat!")
     private Integer seats;
 
-    @NotNull(message = "LocationId is required!")
+    @NotNull(message = "Location is required!")
     private LocationDto location;
 
     private List<String> photoUrls;
