@@ -216,4 +216,34 @@ public class CarServiceImpl implements CarService {
                 .map(carMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("Car with id " + id + " not found"));
     }
+
+    @Override
+    public void deleteCar(Long id, String ownerEmail) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Car with id " + id + " not found"));
+
+        // Проверка владельца
+        if (!car.getOwner().getEmail().equals(ownerEmail)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, "You do not have permission to delete this car"
+            );
+        }
+
+        // Удаляем фотографии
+        List<CarPhoto> photos = carPhotoRepository.findByCarId(car.getId());
+        carPhotoRepository.deleteAll(photos);
+
+        // Удаляем верификационные документы
+        List<VerificationDoc> docs = verificationDocRepository.findByUserId(car.getOwner().getId());
+        verificationDocRepository.deleteAll(docs);
+
+        // Удаляем локацию
+        Location location = car.getLocation();
+        if (location != null) {
+            locationRepository.delete(location);
+        }
+
+        // Удаляем сам автомобиль
+        carRepository.delete(car);
+    }
 }

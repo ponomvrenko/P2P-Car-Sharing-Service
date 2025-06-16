@@ -32,7 +32,7 @@ public class CarPhotoServiceImpl implements CarPhotoService {
         List<CarPhotoDto> result = new ArrayList<>();
         for (MultipartFile file : files) {
             try {
-                String url = gcsService.uploadFile(file, file.getOriginalFilename());
+                String url = gcsService.uploadFile(file, file.getOriginalFilename(), carId);
                 CarPhoto photo = CarPhoto.builder()
                         .car(car)
                         .url(url)

@@ -19,4 +19,6 @@ public interface CarService {
     CarResponseDto approveCar(Long id);
 
     CarResponseDto getCarById(Long id);
+
+    void deleteCar(Long id, String ownerEmail);
 }

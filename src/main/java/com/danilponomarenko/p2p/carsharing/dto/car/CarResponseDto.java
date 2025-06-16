@@ -37,4 +37,6 @@ public class CarResponseDto {
     private Car.CarStatus status;
 
     private LocationDto location;
+
+    private String primaryPhotoUrl;
 }

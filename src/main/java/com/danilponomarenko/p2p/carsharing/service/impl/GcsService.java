@@ -18,10 +18,15 @@ public class GcsService {
         this.storage = storage;
     }
 
-    public String uploadFile(MultipartFile file, String objectName) throws Exception {
-        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, objectName).build();
+    public String uploadFile(
+            MultipartFile file,
+            String objectName,
+            Long uniqueNumber
+    ) throws Exception {
+        String fileNameInBucket = String.format("%d-%s", uniqueNumber, objectName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileNameInBucket).build();
         storage.create(blobInfo, file.getBytes());
-        return String.format("https://storage.googleapis.com/%s/%s", bucketName, objectName);
+        return String.format("https://storage.googleapis.com/%s/%s", bucketName, fileNameInBucket);
     }
 
     public void deleteFileByUrl(String url) {

@@ -33,7 +33,7 @@ public class VerificationDocServiceImpl implements VerificationDocService {
 
         String url;
         try {
-            url = gcsService.uploadFile(file, file.getOriginalFilename());
+            url = gcsService.uploadFile(file, file.getOriginalFilename(), user.getId());
         } catch (Exception e) {
             // Можно залогировать ошибку (логгер или System.err)
             throw new RuntimeException(

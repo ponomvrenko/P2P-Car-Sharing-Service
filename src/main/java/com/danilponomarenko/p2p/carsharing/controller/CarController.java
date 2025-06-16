@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,5 +70,12 @@ public class CarController {
     @PutMapping("/{id}/approve")
     public CarResponseDto approveCar(@PathVariable Long id) {
         return carService.approveCar(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER') or hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id, Authentication authentication) {
+        carService.deleteCar(id, authentication.getName());
+        return ResponseEntity.noContent().build();
     }
 }
