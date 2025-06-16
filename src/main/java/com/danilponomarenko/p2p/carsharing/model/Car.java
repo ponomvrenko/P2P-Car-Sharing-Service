@@ -121,6 +121,7 @@ public class Car {
         AVAILABLE,
         RENTED,
         UNDER_MAINTENANCE,
-        UNAVAILABLE
+        UNAVAILABLE,
+        PENDING_VERIFICATION
     }
 }

@@ -134,6 +134,19 @@ public class CarServiceImpl implements CarService {
             car.setSeats(requestDto.getSeats());
         }
 
+        if (requestDto.getStatus() != null) {
+            if (requestDto.getStatus() == Car.CarStatus.AVAILABLE
+                    || requestDto.getStatus() == Car.CarStatus.UNAVAILABLE
+                    || requestDto.getStatus() == Car.CarStatus.PENDING_VERIFICATION
+                    || requestDto.getStatus() == Car.CarStatus.RENTED
+                    || requestDto.getStatus() == Car.CarStatus.UNDER_MAINTENANCE
+            ) {
+                car.setStatus(requestDto.getStatus());
+            } else {
+                throw new IllegalArgumentException("Invalid car status: " + requestDto.getStatus());
+            }
+        }
+
         if (requestDto.getLocation() != null) {
             Location location = new Location();
             location.setName(requestDto.getLocation().getName());
@@ -197,4 +210,10 @@ public class CarServiceImpl implements CarService {
         return carMapper.toDto(saved);
     }
 
+    @Override
+    public CarResponseDto getCarById(Long id) {
+        return carRepository.findById(id)
+                .map(carMapper::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Car with id " + id + " not found"));
+    }
 }

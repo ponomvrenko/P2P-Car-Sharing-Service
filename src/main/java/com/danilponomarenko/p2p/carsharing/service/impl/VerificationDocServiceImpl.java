@@ -24,12 +24,12 @@ public class VerificationDocServiceImpl implements VerificationDocService {
 
     @Override
     public VerificationDocDto uploadDoc(
-            Long userId,
+            String userEmail,
             VerificationDoc.VerificationDocType docType,
             MultipartFile file
     ) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userEmail));
 
         String url;
         try {

@@ -39,6 +39,11 @@ public class CarController {
         return carService.getAllAvailableCars();
     }
 
+    @GetMapping("/{id}")
+    public CarResponseDto getCarById(@PathVariable Long id) {
+        return carService.getCarById(id);
+    }
+
     @PreAuthorize("hasRole('OWNER')")
     @GetMapping("/my")
     public List<CarResponseDto> getMyCars(Authentication authentication) {

@@ -1,5 +1,6 @@
 package com.danilponomarenko.p2p.carsharing.dto.car;
 
+import com.danilponomarenko.p2p.carsharing.dto.location.LocationDto;
 import com.danilponomarenko.p2p.carsharing.model.Car;
 import java.math.BigDecimal;
 import lombok.Data;
@@ -35,7 +36,5 @@ public class CarResponseDto {
 
     private Car.CarStatus status;
 
-    // TODO: add LocationDto or locationId if needed
-    private String locationName; // або об'єкт LocationDto за потреби
-
+    private LocationDto location;
 }

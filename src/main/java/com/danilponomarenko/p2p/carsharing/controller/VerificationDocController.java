@@ -25,11 +25,11 @@ public class VerificationDocController {
     @PostMapping
     @PreAuthorize("hasRole('OWNER') or hasRole('ADMIN')")
     public ResponseEntity<VerificationDocDto> uploadDoc(
-            @RequestParam("userId") Long userId,
+            @RequestParam("userEmail") String userEmail,
             @RequestParam("docType") VerificationDoc.VerificationDocType docType,
             @RequestParam("file") MultipartFile file) {
         try {
-            VerificationDocDto result = verificationDocService.uploadDoc(userId, docType, file);
+            VerificationDocDto result = verificationDocService.uploadDoc(userEmail, docType, file);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
