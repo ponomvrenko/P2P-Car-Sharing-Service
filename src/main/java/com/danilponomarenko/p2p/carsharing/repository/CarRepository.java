@@ -11,5 +11,4 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findByOwnerEmail(String email);
 
-    List<Car> findCarByStatus(Car.CarStatus status);
 }
