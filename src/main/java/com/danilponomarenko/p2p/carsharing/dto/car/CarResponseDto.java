@@ -1,8 +1,10 @@
 package com.danilponomarenko.p2p.carsharing.dto.car;
 
 import com.danilponomarenko.p2p.carsharing.dto.location.LocationDto;
+import com.danilponomarenko.p2p.carsharing.dto.user.UserResponseDto;
 import com.danilponomarenko.p2p.carsharing.model.Car;
 import java.math.BigDecimal;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -39,4 +41,8 @@ public class CarResponseDto {
     private LocationDto location;
 
     private String primaryPhotoUrl;
+
+    private List<String> photoUrls;
+
+    private UserResponseDto owner;
 }
