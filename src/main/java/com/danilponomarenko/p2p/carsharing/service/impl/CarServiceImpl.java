@@ -3,9 +3,11 @@ package com.danilponomarenko.p2p.carsharing.service.impl;
 import com.danilponomarenko.p2p.carsharing.dto.car.CarCreateRequestDto;
 import com.danilponomarenko.p2p.carsharing.dto.car.CarResponseDto;
 import com.danilponomarenko.p2p.carsharing.dto.car.CarUpdateRequestDto;
+import com.danilponomarenko.p2p.carsharing.dto.user.UserResponseDto;
 import com.danilponomarenko.p2p.carsharing.exception.EntityNotFoundException;
 import com.danilponomarenko.p2p.carsharing.mapper.CarMapper;
 import com.danilponomarenko.p2p.carsharing.mapper.LocationMapper;
+import com.danilponomarenko.p2p.carsharing.mapper.UserMapper;
 import com.danilponomarenko.p2p.carsharing.model.Car;
 import com.danilponomarenko.p2p.carsharing.model.CarPhoto;
 import com.danilponomarenko.p2p.carsharing.model.Location;
@@ -19,6 +21,7 @@ import com.danilponomarenko.p2p.carsharing.repository.VerificationDocRepository;
 import com.danilponomarenko.p2p.carsharing.service.CarService;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,7 @@ public class CarServiceImpl implements CarService {
     private final LocationRepository locationRepository;
     private final VerificationDocRepository verificationDocRepository;
     private final CarMapper carMapper;
+    private final UserMapper userMapper;
     private final LocationMapper locationMapper;
 
     @Transactional
@@ -87,10 +91,19 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<CarResponseDto> getAllAvailableCars() {
-        return carRepository.findByStatus(Car.CarStatus.AVAILABLE)
-                .stream()
-                .map(carMapper::toDto)
-                .collect(Collectors.toList());
+        List<Car> cars = carRepository.findByStatus(Car.CarStatus.AVAILABLE);
+        List<CarResponseDto> result = new ArrayList<>();
+        for (Car car : cars) {
+            User owner = userRepository.findById(car.getOwner().getId())
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Owner not found for car: " + car.getId())
+                    );
+            CarResponseDto carDto = carMapper.toDto(car);
+            UserResponseDto ownerDto = userMapper.toDto(owner);
+            carDto.setOwner(ownerDto);
+            result.add(carDto);
+        }
+        return result;
     }
 
     @Override
